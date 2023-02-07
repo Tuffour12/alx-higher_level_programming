@@ -1,16 +1,18 @@
 #!/usr/bin/python3
-""" Module that creates an Object from a JSON file
-"""
+"""add item"""
+
+
 import json
+import sys
+import os.path
 
+save_to_json_file = __import__('5-save_to_json_file').save_to_json_file
+load_from_json_file = __import__('6-load_from_json_file').load_from_json_file
 
-def load_from_json_file(filename):
-    """ Function that creates an Object from a JSON file
-    Args:
-        filename: textfile name
-    Raises:
-        Exception: when the object can't be encoded
-    """
-    with open(filename, 'r', encoding="utf-8") as f:
-        return json.load(f)
-
+filename = "add_item.json"
+if os.path.isfile(filename):
+    obj = load_from_json_file(filename)
+else:
+    obj = []
+obj.extend(sys.argv[1:])
+save_to_json_file(obj, filename)
